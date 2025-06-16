@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from typing import Optional
+
 
 class UserCreate(BaseModel):
     username:str
@@ -24,9 +26,12 @@ class NotesOut(BaseModel):
     id:int
     title:str
     content:str
-    owner_id:str
+
 
     class Config():
         orm_mode=True
 
         
+class NotesUpdate(BaseModel):
+    title:Optional[str]=None
+    content:Optional[str]=None
