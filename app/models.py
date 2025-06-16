@@ -1,11 +1,11 @@
-from sqlalchemy import String,Integer,Column
+from sqlalchemy import String,Integer,Column,ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 
 
 Base=declarative_base()
 
 class USER(Base):
-    __tablename___ = 'users'
+    __tablename__ = 'users'
     
     id=Column(Integer,primary_key=True,index=True)
     username=Column(String,unique=True,index=True)
@@ -17,6 +17,7 @@ class NOTE(Base):
     id=Column(Integer,primary_key=True,index=True)
     title=Column(String,index=True)
     content=Column(String)
+    owner_id=Column(Integer,ForeignKey('users.id'))
 
 
     
