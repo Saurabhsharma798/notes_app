@@ -1,10 +1,13 @@
 import streamlit as st
 import requests
 
+
+#api to hit backend
 API_URL="http://localhost:8000"
 
 st.title("To-Do List")
 
+#jwt auth token checking
 if 'token' not in st.session_state:
     st.session_state['token']=None
 
@@ -14,7 +17,7 @@ if  st.session_state['token'] is None:
     username=st.text_input("username")
     password=st.text_input("password",type='password')
     
-    
+#login   
     if mode=="Login":
 
         if st.button('login'):
@@ -28,10 +31,11 @@ if  st.session_state['token'] is None:
                 st.error('login failed')
         st.stop()
     else:
+#signup
         if st.button('Signup'):
             res=requests.post(f"{API_URL}/auth/signup",json={'username':username,'password':password})
             if res.status_code == 200:
-                # st.success("Account Created! Please Login.")
+                # auto login after signup
                 login_res=requests.post(f"{API_URL}/auth/login",data={'username':username,'password':password})
                 if login_res.status_code==200:
                     token=res.json()['access_token']
@@ -44,6 +48,7 @@ if  st.session_state['token'] is None:
             else:
                 st.error("sign up failed username may already exist")
         st.stop()
+#logout option
 st.sidebar.button("Logout", on_click=lambda: st.session_state.update({'token': None}))
 
 #fetch task from backend
@@ -79,6 +84,8 @@ if btn:
 
 if 'edit_id' not in st.session_state:
     st.session_state['edit_id']=None
+
+
 #show task
 for task in tasks:
     col1, col2, col3 = st.columns([0.7,0.15,0.15])
@@ -96,7 +103,7 @@ for task in tasks:
             requests.delete(f"{API_URL}/notes/{task['id']}",headers=headers)
             st.rerun()
 
-
+#update task functionality
 if st.session_state.edit_id:
     st.subheader("Update Task")
     new_title=st.text_input("update title",value=st.session_state.edit_title)
@@ -114,3 +121,9 @@ if st.session_state.edit_id:
     if st.button("Cancel"):
         st.session_state.edit_id=None
         st.rerun()
+
+#token session expired
+if response.status_code==401:
+    st.session_state.token=None
+    st.warning('session expired please login again')
+    st.rerun()
