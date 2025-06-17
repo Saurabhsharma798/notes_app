@@ -11,7 +11,7 @@ router=APIRouter(
     tags=['Auth']
 )
 
-@router.post("/register",response_model=UserOut)
+@router.post("/signup",response_model=UserOut)
 def register(user:UserCreate,db:Session=Depends(get_db)):
     hashed=hash_password(user.password)
     new_user=USER(username=user.username,hashed_password=hashed)
