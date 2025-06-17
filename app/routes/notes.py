@@ -1,9 +1,9 @@
 from fastapi import APIRouter,Depends,HTTPException
-from schemas import UserCreate,UserLogin,UserOut,NotesCreate,NotesOut,NotesUpdate
+from ..schemas import UserCreate,UserLogin,UserOut,NotesCreate,NotesOut,NotesUpdate
 from sqlalchemy.orm import Session
-from models import NOTE,USER
-from database import get_db
-from auth import get_current_user
+from ..models import NOTE,USER
+from ..database import get_db
+from ..auth import get_current_user
 
 router=APIRouter(
     prefix='/notes',

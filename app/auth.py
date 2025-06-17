@@ -4,15 +4,15 @@ from jose import JWTError,jwt
 from fastapi import Depends,HTTPException,status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
-from database import get_db
-from models import USER
+from .database import get_db
+from .models import USER
 
 
 pwd_context=CryptContext(schemes=['bcrypt'],deprecated='auto')
 secret_key="abcd"
 ALGORITHM="HS256"
 ACCESS_TOKEN_EXP_MIN=30
-oauth2_scheme=OAuth2PasswordBearer(tokenUrl='login')
+oauth2_scheme=OAuth2PasswordBearer(tokenUrl='/auth/login')
 
 
 

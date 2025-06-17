@@ -15,7 +15,7 @@ class UserOut(BaseModel):
     username:str
 
     class Config():
-        orm_mode=True
+        from_attributes = True
 
 
 class NotesCreate(BaseModel):
@@ -29,9 +29,13 @@ class NotesOut(BaseModel):
 
 
     class Config():
-        orm_mode=True
+        from_attributes = True
 
         
 class NotesUpdate(BaseModel):
     title:Optional[str]=None
     content:Optional[str]=None
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
