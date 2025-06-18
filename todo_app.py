@@ -3,7 +3,7 @@ import requests
 
 
 #api to hit backend
-API_URL="https://fastapi-backend-hqap.onrender.com"
+API_URL="https://notes-app-4hrv.onrender.com/"
 
 st.title("To-Do List")
 
