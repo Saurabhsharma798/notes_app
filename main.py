@@ -7,5 +7,8 @@ load_dotenv()
 
 
 app=FastAPI()
+@app.get('/')
+def home():
+    return {'message':"you entered the home page"}
 app.include_router(notes.router)
 app.include_router(users.router)
